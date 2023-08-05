@@ -6,22 +6,26 @@ http.createServer((req, res) => {
   const url = req.url;
   const method = req.method;
 
+  console.log('URL:' , url);
+
   if (url === '/') {
     res.write('<head><title>Enter Blog Post</title></head>');
-    res.write('<body><form action="/message" method="POST">');
+    res.write('<body><form action="/messages" method="POST">');
     res.write('<input type="text" name="title" placeholder="Title"><br>');
     res.write('<textarea name="body" placeholder="Blog Body"></textarea><br>');
     res.write('<button type="submit">Submit</button></form></body>');
     res.end();
-  } else if (url === '/message' && method === 'POST') {
+  } else if (url === '/messages' && method === 'POST') {
     const body = [];
     req.on('data', (chunk) => {
       body.push(chunk);
     });
     req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString();
+      console.log(parsedBody);
       const params = new URL(`https://localhost${parsedBody}`).searchParams;
       const title = params.get('title');
+      console.log(title);
       const blogBody = params.get('body');
       const blogPost = `${title}\n\n${blogBody}`;
 
