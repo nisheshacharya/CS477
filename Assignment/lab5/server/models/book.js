@@ -25,7 +25,7 @@ module.exports = class Book {
     }
 
     save(){
-        if(products.find(book => book.id == this.id)){
+        if(books.find(book => book.id == this.id)){
             throw new Error(`Book with Id ${this.id} already exists`);
         } else {
             books.push(this);
